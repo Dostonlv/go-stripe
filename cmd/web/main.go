@@ -34,19 +34,6 @@ type application struct {
 	version       string
 }
 
-func (app *application) serve() error {
-	srv := &http.Server{
-		Addr:              fmt.Sprintf(":%d", app.config.port),
-		Handler:           app.routes(),
-		IdleTimeout:       30 * time.Second,
-		ReadTimeout:       10 * time.Second,
-		ReadHeaderTimeout: 5 * time.Second,
-		WriteTimeout:      5 * time.Second,
-	}
-	app.infoLog.Println(fmt.Sprintf("Starting HTTP server in %s mode on port %d", app.config.env, app.config.port))
-	return srv.ListenAndServe()
-}
-
 func main() {
 	var cfg config
 
@@ -76,4 +63,25 @@ func main() {
 		app.errorLog.Println(err)
 		log.Fatal(err)
 	}
+}
+
+func (app *application) serve() error {
+	srv := &http.Server{
+		Addr:              fmt.Sprintf(":%d", app.config.port),
+		Handler:           app.routes(),
+		IdleTimeout:       30 * time.Second,
+		ReadTimeout:       10 * time.Second,
+		ReadHeaderTimeout: 5 * time.Second,
+		WriteTimeout:      5 * time.Second,
+	}
+
+	app.infoLog.Printf("Starting HTTP server in %s mode on port %d\n", app.config.env, app.config.port)
+
+	err := srv.ListenAndServeTLS("localhost.crt", "localhost.key")
+	if err != nil {
+		app.errorLog.Printf("Error starting server: %v\n", err)
+		return err
+	}
+
+	return nil
 }
