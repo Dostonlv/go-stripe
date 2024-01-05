@@ -2,10 +2,9 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/Dostonlv/go-stripe/internal/cards"
 	"net/http"
 	"strconv"
-
-	"github.com/Dostonlv/go-stripe/internal/cards"
 )
 
 type stripePayload struct {
