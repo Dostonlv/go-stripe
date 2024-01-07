@@ -36,7 +36,7 @@ func main() {
 
 	flag.IntVar(&cfg.port, "port", 4001, "Server port to listen on")
 	flag.StringVar(&cfg.env, "env", "development", "Application enviornment {development|production|maintenance}")
-	flag.StringVar(&cfg.db.dsn, "dsn", "itachi:secret@tcp(localhost:3306)/widgets?parseTime=true&tls=false", "DSN")
+	//flag.StringVar(&cfg.db.dsn, "dsn", "itachi:secret@tcp(localhost:3306)/widgets?parseTime=true&tls=false", "DSN")
 
 	flag.Parse()
 
@@ -77,7 +77,7 @@ func (app *application) serve() error {
 
 	app.infoLog.Printf("Starting Back end server in %s mode on port %d\n", app.config.env, app.config.port)
 
-	err := srv.ListenAndServeTLS("localhost.crt", "localhost.key")
+	err := srv.ListenAndServe()
 	if err != nil {
 		app.errorLog.Printf("Error starting server: %v\n", err)
 		return err

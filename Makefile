@@ -3,6 +3,7 @@ STRIPE_KEY=pk_test_51KHRiBE8NBTTWoLqY6yTrfGZXM7qxnm9gjA2O95ksAzcOefjxcHKwakXiVhH
 GOSTRIPE_PORT=4000
 API_PORT=4001
 
+
 ## build: builds all binaries
 build: clean build_front build_back
 	@printf "All binaries built!\n"
@@ -28,6 +29,8 @@ build_back:
 
 ## start: starts front and back end
 start: start_front start_back
+
+go build  ./cmd/api ./cmd/web -tags netgo -ldflags '-s -w' -o app
 
 ## start_front: starts the front end
 start_front: build_front
