@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/Dostonlv/go-stripe/internal/driver"
 	"html/template"
 	"log"
 	"net/http"
@@ -51,11 +50,11 @@ func main() {
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	errorLog := log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 
-	conn, err := driver.OpenDB(cfg.db.dsn)
-	if err != nil {
-		errorLog.Fatal(err)
-	}
-	defer conn.Close()
+	//conn, err := driver.OpenDB(cfg.db.dsn)
+	//if err != nil {
+	//	errorLog.Fatal(err)
+	//}
+	//defer conn.Close()
 
 	tc := make(map[string]*template.Template)
 
@@ -66,7 +65,7 @@ func main() {
 		templateCache: tc,
 		version:       version,
 	}
-	err = app.serve()
+	err := app.serve()
 	if err != nil {
 		app.errorLog.Println(err)
 		log.Fatal(err)
