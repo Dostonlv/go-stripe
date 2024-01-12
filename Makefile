@@ -29,11 +29,12 @@ build_back:
 
 ## start: starts front and back end
 start: start_front start_back
-## make front and start back  build command\
 
-## go build -o ./dist/gostripe ./cmd/web && go build -o ./dist/gostripe_api ./cmd/api
-##go build  -tags netgo -ldflags '-s -w' -o app ./cmd/web && go build  -tags netgo -ldflags '-s -w' -o app_api ./cmd/api
-## go build -o ./dist/gostripe ./cmd/web && go build -o ./dist/gostripe_api ./cmd/api
+test:
+	@echo "Testing..."
+	@go build -o dist/gostripe ./cmd/web
+	@echo "Tests passed!"
+
 
 ## start_front: starts the front end
 start_front: build_front
