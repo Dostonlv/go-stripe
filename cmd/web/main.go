@@ -3,12 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/Dostonlv/go-stripe/internal/driver"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/Dostonlv/go-stripe/internal/driver"
+	"github.com/Dostonlv/go-stripe/internal/models"
 )
 
 const version = "1.0.0"
@@ -32,6 +34,7 @@ type application struct {
 	errorLog      *log.Logger
 	templateCache map[string]*template.Template
 	version       string
+	DB            models.DBModel
 }
 
 func main() {
@@ -64,6 +67,7 @@ func main() {
 		errorLog:      errorLog,
 		templateCache: tc,
 		version:       version,
+		DB:            models.DBModel{DB: conn},
 	}
 	err = app.serve()
 	if err != nil {
