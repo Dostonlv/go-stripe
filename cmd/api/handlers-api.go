@@ -76,6 +76,7 @@ func (app *application) GetPaymentIntent(w http.ResponseWriter, r *http.Request)
 func (app *application) GetWidgetByID(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	WidgetID, _ := strconv.Atoi(id)
+
 	widget, err := app.DB.GetWidget(WidgetID)
 	if err != nil {
 		app.errorLog.Println(err)
